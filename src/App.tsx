@@ -1,32 +1,29 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 type AcaoProps = {
   concluida?: boolean
 } & React.ComponentProps<'button'>
 
-/*
-interface AcaoProps extends React.ComponentProps<'button'> {
-  concluida?: boolean
+type Tarefa = {
+  id: number
+  nome: string
+  concluida: boolean
 }
-*/
+
+const getTarefas = (): Promise<Tarefa[]> => {
+  return fetch('http://localhost:3000/tarefas').then(response => response.json())
+}
 
 function Acao({ concluida, ...props }: AcaoProps) {
   return <button {...props}>{concluida ? '✅' : '❌'}</button>
 }
 
 function App() {
-  const [tarefas, setTarefas] = useState([
-    {
-      id: 1,
-      nome: 'Estudar React',
-      concluida: false
-    },
-    {
-      id: 2,
-      nome: 'Estudar TypeScript',
-      concluida: false
-    },
-  ])
+  const [tarefas, setTarefas] = useState<Tarefa[]>([])
+
+  useEffect(() => {
+    getTarefas().then(setTarefas)
+  }, [])
 
   const marcarComoConcluida = (id: number) => {
     setTarefas(tarefas.map(tarefa => {
@@ -43,20 +40,22 @@ function App() {
   return (
     <div>
       <h1>Tarefas</h1>
-
-      <ul>
-        {tarefas.map(tarefa => (
-          <li key={tarefa.id}>
-            {tarefa.nome}
-            <Acao
-              concluida={tarefa.concluida}
-              onClick={() => {
+      {tarefas.length > 0 ? (
+        <ul>
+          {tarefas.map(tarefa => (
+            <li key={tarefa.id}>
+              {tarefa.nome}
+              <Acao
+                concluida={tarefa.concluida}
+                onClick={() => {
                 marcarComoConcluida(tarefa.id)
-              }}
-            />
-          </li>
-        ))}
-      </ul>
+                }}
+              />
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
     </div>
   )
 }

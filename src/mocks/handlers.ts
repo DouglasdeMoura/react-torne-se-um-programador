@@ -14,7 +14,7 @@ const tarefas = [
 ]
 
 export const handlers = [
-  rest.get('/tarefas', (_req, res, ctx) => {
+  rest.get('http://localhost:3000/tarefas', (_req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json(tarefas),
