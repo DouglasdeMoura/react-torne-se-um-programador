@@ -60,17 +60,15 @@ function App() {
     })
   }
 
-  if (carregando) {
-    return <p>Carregando...</p>
-  }
-
-  if (erro) {
-    return <p>Ocorreu um erro durante a listagem das tarefas.</p>
-  }
-
   return (
     <div>
       <h1>Tarefas</h1>
+      <form onSubmit={handleOnSubmit}>
+        <input type="text" name="nome" />
+        <button type="submit">Adicionar tarefa</button>
+      </form>
+      {carregando ? <p>Carregando...</p> : null}
+      {erro ? <p>Ocorreu um erro durante a listagem das tarefas.</p> : null}
       {tarefas && Array.isArray(tarefas) ? (
         <ul>
           {tarefas.map(tarefa => (
@@ -86,10 +84,7 @@ function App() {
           ))}
         </ul>
       ) : null}
-      <form onSubmit={handleOnSubmit}>
-        <input type="text" name="nome" />
-        <button type="submit">Adicionar tarefa</button>
-      </form>
+      
     </div>
   )
 }
