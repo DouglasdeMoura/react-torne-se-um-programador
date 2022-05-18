@@ -3,7 +3,7 @@ import App from './App'
 
 describe('<App />', () => {
   it('deve renderizar o componente', async () => {
-    const { container } = render(<App />)
+    render(<App />)
 
     expect(screen.getByText('Tarefas')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Tarefas' })).toBeInTheDocument()

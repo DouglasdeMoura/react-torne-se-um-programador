@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
+import { useFetch } from "./hooks"
 
 type AcaoProps = {
   concluida?: boolean
@@ -29,14 +30,16 @@ function Acao({ concluida, ...props }: AcaoProps) {
 }
 
 function App() {
-  const [tarefas, setTarefas] = useState<Tarefa[]>([])
+  const { dados, erro, carregando } = useFetch<Tarefa[]>(getTarefas)
+
+  const [tarefas, setTarefas] = useState(dados)
 
   useEffect(() => {
-    getTarefas().then(setTarefas)
-  }, [])
+    setTarefas(dados)
+  }, [dados])
 
   const marcarComoConcluida = (id: number) => {
-    setTarefas(tarefas.map(tarefa => {
+    setTarefas(tarefas?.map(tarefa => {
       if (tarefa.id === id) {
         return {
           ...tarefa,
@@ -60,7 +63,7 @@ function App() {
   return (
     <div>
       <h1>Tarefas</h1>
-      {tarefas.length > 0 ? (
+      {tarefas && Array.isArray(tarefas) ? (
         <ul>
           {tarefas.map(tarefa => (
             <li key={tarefa.id}>
