@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '../../utils/test-utils'
 import { App } from './app'
 
 describe('<App />', () => {
