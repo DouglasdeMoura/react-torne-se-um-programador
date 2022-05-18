@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useFetch } from "./hooks"
+import { useQuery } from 'react-query'
 
 type AcaoProps = {
   concluida?: boolean
@@ -30,7 +30,7 @@ function Acao({ concluida, ...props }: AcaoProps) {
 }
 
 function App() {
-  const { dados, erro, carregando } = useFetch<Tarefa[]>(getTarefas)
+  const { data: dados, error: erro, isLoading: carregando } = useQuery<Tarefa[]>('getTarefas', getTarefas)
 
   const [tarefas, setTarefas] = useState(dados)
 
