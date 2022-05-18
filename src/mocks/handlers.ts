@@ -63,20 +63,15 @@ export const handlers = [
       )
     }
 
-    if (req.body.nome) {
-      tarefa.nome = req.body.nome
-    }
-
-    if (req.body.concluida) {
-      tarefa.concluida = req.body.concluida
-    }
-
     tarefas?.map(t => {
       if (t.id === id) {
-        return {
+        const obj =  {
           ...t,
-          ...tarefa,
+          concluida: req.body.concluida || t.concluida,
+          nome: req.body.nome || t.nome,
         }
+        
+        return obj
       }
 
       return t
