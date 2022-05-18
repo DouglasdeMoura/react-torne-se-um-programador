@@ -1,9 +1,4 @@
-import { useEffect, useState } from "react"
 import { useQuery } from 'react-query'
-
-type AcaoProps = {
-  concluida?: boolean
-} & React.ComponentProps<'button'>
 
 type Tarefa = {
   id: number
@@ -33,10 +28,6 @@ const updateTarefa = ({ id, nome, concluida }: Partial<Pick<Tarefa, 'nome' | 'co
     },
     body: JSON.stringify({ nome, concluida })
   }).then(response => response.json())
-}
-
-function Acao({ concluida, ...props }: AcaoProps) {
-  return <button {...props}>{concluida ? '✅' : '❌'}</button>
 }
 
 function App() {
@@ -69,13 +60,8 @@ function App() {
         <ul>
           {tarefas.map(tarefa => (
             <li key={tarefa.id}>
-              {tarefa.nome}
-              <Acao
-                concluida={tarefa.concluida}
-                onClick={() => {
-                  marcarComoConcluida(tarefa.id)
-                }}
-              />
+              <input type="checkbox" onClick={() => marcarComoConcluida(tarefa.id)} />
+              {tarefa.concluida ? <del>{tarefa.nome}</del> : tarefa.nome}
             </li>
           ))}
         </ul>
