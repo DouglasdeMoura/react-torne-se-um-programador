@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { addTarefa, getTarefas, updateTarefa } from './services'
+import { addTarefa, getTarefas, updateTarefa } from './app.services'
 
 export function App() {
   const { data: tarefas, error: erro, isLoading: carregando, refetch } = useQuery('getTarefas', getTarefas)
