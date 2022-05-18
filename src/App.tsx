@@ -25,29 +25,25 @@ const addTarefa = (nome: string) => {
   }).then(response => response.json())
 }
 
+const updateTarefa = ({ id, nome, concluida }: Partial<Pick<Tarefa, 'nome' | 'concluida'>> & Pick<Tarefa, 'id'>) => {
+  return fetch(`http://localhost:3000/tarefas/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ nome, concluida })
+  }).then(response => response.json())
+}
+
 function Acao({ concluida, ...props }: AcaoProps) {
   return <button {...props}>{concluida ? '✅' : '❌'}</button>
 }
 
 function App() {
-  const { data: dados, error: erro, isLoading: carregando } = useQuery<Tarefa[]>('getTarefas', getTarefas)
-
-  const [tarefas, setTarefas] = useState(dados)
-
-  useEffect(() => {
-    setTarefas(dados)
-  }, [dados])
+  const { data: tarefas, error: erro, isLoading: carregando, refetch } = useQuery<Tarefa[]>('getTarefas', getTarefas)
 
   const marcarComoConcluida = (id: number) => {
-    setTarefas(tarefas?.map(tarefa => {
-      if (tarefa.id === id) {
-        return {
-          ...tarefa,
-          concluida: !tarefa.concluida
-        }
-      }
-      return tarefa
-    }))
+    updateTarefa({ id, concluida: true }).then(() => refetch())
   }
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -56,7 +52,7 @@ function App() {
     const formData = new FormData(event.currentTarget)
 
     addTarefa(formData.get('nome') as string).then(() => {
-      getTarefas().then(setTarefas)
+      refetch()
     })
   }
 

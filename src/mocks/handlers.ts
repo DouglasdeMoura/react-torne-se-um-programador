@@ -49,5 +49,42 @@ export const handlers = [
       ctx.status(201),
       ctx.json(tarefa),
     )
+  }),
+  rest.patch<{ nome?: string, concluida?: boolean }>('http://localhost:3000/tarefas/:id', (req, res, ctx) => {
+    const id = Number(req.params.id)
+    const tarefa = tarefas.find(t => t.id === id)
+
+    if (!tarefa) {
+      return res(
+        ctx.status(404),
+        ctx.json({
+          error: 'Tarefa não encontrada'
+        }),
+      )
+    }
+
+    if (req.body.nome) {
+      tarefa.nome = req.body.nome
+    }
+
+    if (req.body.concluida) {
+      tarefa.concluida = req.body.concluida
+    }
+
+    tarefas?.map(t => {
+      if (t.id === id) {
+        return {
+          ...t,
+          ...tarefa,
+        }
+      }
+
+      return t
+    })
+
+    return res(
+      ctx.status(200),
+      ctx.json(tarefa),
+    )
   })
 ]
