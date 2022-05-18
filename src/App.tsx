@@ -60,6 +60,14 @@ function App() {
     })
   }
 
+  if (carregando) {
+    return <p>Carregando...</p>
+  }
+
+  if (erro) {
+    return <p>Ocorreu um erro durante a listagem das tarefas.</p>
+  }
+
   return (
     <div>
       <h1>Tarefas</h1>

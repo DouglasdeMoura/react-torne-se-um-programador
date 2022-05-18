@@ -14,7 +14,15 @@ const tarefas = [
 ]
 
 export const handlers = [
-  rest.get('http://localhost:3000/tarefas', (_req, res, ctx) => {
+  rest.get('http://localhost:3000/tarefas', async (req, res, ctx) => {
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    if (req.url.searchParams.get('error') === 'true') {
+      return res(
+        ctx.status(500)
+      )
+    }
+
     return res(
       ctx.status(200),
       ctx.json(tarefas),
