@@ -1,6 +1,6 @@
 import { rest } from 'msw'
 
-const tarefas = [
+let tarefas = [
   {
     id: 1,
     nome: 'Estudar React',
@@ -63,15 +63,12 @@ export const handlers = [
       )
     }
 
-    tarefas?.map(t => {
+    tarefas = tarefas?.map(t => {
       if (t.id === id) {
-        const obj =  {
+        return {
           ...t,
-          concluida: req.body.concluida || t.concluida,
-          nome: req.body.nome || t.nome,
+          ...req.body
         }
-        
-        return obj
       }
 
       return t
