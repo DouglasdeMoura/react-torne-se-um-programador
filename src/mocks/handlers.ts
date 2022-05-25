@@ -13,6 +13,8 @@ let tarefas = [
   },
 ]
 
+const getTarefa = (id: number) => tarefas.find(t => t.id === id)
+
 export const handlers = [
   rest.get('http://localhost:3000/tarefas', async (req, res, ctx) => {
     await new Promise(resolve => setTimeout(resolve, 1000))
@@ -52,7 +54,7 @@ export const handlers = [
   }),
   rest.patch<{ nome?: string, concluida?: boolean }>('http://localhost:3000/tarefas/:id', (req, res, ctx) => {
     const id = Number(req.params.id)
-    const tarefa = tarefas.find(t => t.id === id)
+    const tarefa = getTarefa(id)
 
     if (!tarefa) {
       return res(
@@ -76,7 +78,7 @@ export const handlers = [
 
     return res(
       ctx.status(200),
-      ctx.json(tarefa),
+      ctx.json(getTarefa(id)),
     )
   })
 ]
