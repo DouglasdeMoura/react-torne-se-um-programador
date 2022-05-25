@@ -1225,6 +1225,11 @@ http-response-object@^3.0.1:
   dependencies:
     "@types/node" "^10.0.3"
 
+iconoir-react@^4.9.2:
+  version "4.9.2"
+  resolved "https://registry.yarnpkg.com/iconoir-react/-/iconoir-react-4.9.2.tgz#5ecf7d4379e2a02a8e3f15b17624a3b7a7f4d5de"
+  integrity sha512-fvem6Vpn4gEDJcJphQn0Xf3vOmFi51/Lcj0PuukGZQldtetRCRKn+tBSnJ5TlyV8h4TzBGClal7vP60KUlzVlw==
+
 iconv-lite@0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.6.3.tgz#a52f80bf38da1952eb5c681790719871a1a72501"
@@ -1666,7 +1671,7 @@ react-dom@^18.0.0:
     loose-envify "^1.1.0"
     scheduler "^0.22.0"
 
-react-error-boundary@^3.1.0:
+react-error-boundary@^3.1.0, react-error-boundary@^3.1.4:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-3.1.4.tgz#255db92b23197108757a888b01e5b729919abde0"
   integrity sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==

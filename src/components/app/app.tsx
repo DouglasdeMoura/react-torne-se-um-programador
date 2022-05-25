@@ -2,13 +2,7 @@ import { useTarefas } from './app.hooks'
 import { addTarefa, updateTarefa } from './app.services'
 
 export function App() {
-  const {
-    data: tarefas,
-    error: erro,
-    isLoading: carregando,
-    refetch
-  } = useTarefas()
-
+  const { data: tarefas, refetch } = useTarefas()
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -27,9 +21,7 @@ export function App() {
         <input type="text" name="nome" />
         <button type="submit">Adicionar tarefa</button>
       </form>
-      {carregando ? <p>Carregando...</p> : null}
-      {erro ? <p>Ocorreu um erro durante a listagem das tarefas.</p> : null}
-      {tarefas && Array.isArray(tarefas) ? (
+      {Array.isArray(tarefas) ? (
         <ul>
           {tarefas.map(tarefa => (
             <li key={tarefa.id}>
@@ -45,7 +37,6 @@ export function App() {
           ))}
         </ul>
       ) : null}
-      
     </div>
   )
 }
