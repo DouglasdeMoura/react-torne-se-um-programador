@@ -1,8 +1,14 @@
-import { useQuery } from 'react-query'
-import { addTarefa, getTarefas, updateTarefa } from './app.services'
+import { useTarefas } from './app.hooks'
+import { addTarefa, updateTarefa } from './app.services'
 
 export function App() {
-  const { data: tarefas, error: erro, isLoading: carregando, refetch } = useQuery('getTarefas', getTarefas)
+  const {
+    data: tarefas,
+    error: erro,
+    isLoading: carregando,
+    refetch
+  } = useTarefas()
+
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
