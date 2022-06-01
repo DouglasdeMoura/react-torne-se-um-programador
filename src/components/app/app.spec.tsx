@@ -1,14 +1,14 @@
-import { render, screen, waitFor, userEvent } from '../../utils/test-utils'
+import { render, screen, waitFor, userEvent, waitForElementToBeRemoved } from '../../utils/test-utils'
 
 import { App } from './app'
 
 describe('<App />', () => {
-  it('deve renderizar o componente', async () => {
+  it('deve renderizar o componente, adicionar uma tarefa e marcá-la e desmarcá-la como concluída', async () => {
     render(<App />)
 
-    expect(screen.getByRole('heading', { name: 'Tarefas' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Tarefas' })).toBeInTheDocument()
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText('Estudar React')).toBeInTheDocument()
       expect(screen.getByText('Estudar TypeScript')).toBeInTheDocument()
     })
@@ -16,8 +16,18 @@ describe('<App />', () => {
     await userEvent.type(screen.getByLabelText('Adicionar tarefa'), 'Estudar GraphQL')
     await userEvent.click(screen.getByText('Adicionar'))
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText('Estudar GraphQL')).toBeInTheDocument()
     })
+
+    await userEvent.click(screen.getByText('Estudar GraphQL'))
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tarefa-concluida-3')).toBeInTheDocument()
+    })
+
+    await userEvent.click(screen.getByText('Estudar GraphQL'))
+
+    await waitForElementToBeRemoved(() => screen.getByTestId('tarefa-concluida-3'))
   })
 })

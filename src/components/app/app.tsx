@@ -41,12 +41,15 @@ const ListaDeTarefas = () => {
         <ul>
           {tarefas.map(tarefa => (
             <li key={tarefa.id}>
-              <input
-                type="checkbox"
-                onClick={() => updateTarefa({ id: tarefa.id, concluida: !tarefa.concluida })}
-                defaultChecked={tarefa.concluida}
-              />
-              {tarefa.concluida ? <del>{tarefa.nome}</del> : tarefa.nome}
+              <label htmlFor={`tarefa-${tarefa.id}`}>
+                <input
+                  id={`tarefa-${tarefa.id}`}
+                  type="checkbox"
+                  onClick={() => updateTarefa({ id: tarefa.id, concluida: !tarefa.concluida })}
+                  defaultChecked={tarefa.concluida}
+                />
+                {tarefa.concluida ? <del data-testid={`tarefa-concluida-${tarefa.id}`}>{tarefa.nome}</del> : tarefa.nome}
+              </label>
             </li>
           ))}
         </ul>
