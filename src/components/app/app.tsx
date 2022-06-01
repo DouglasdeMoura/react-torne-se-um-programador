@@ -1,6 +1,8 @@
+import { useRef } from 'react'
 import { useAddTarefa, useTarefas, useUpdateTarefa } from './app.hooks'
 
 export function App() {
+  const inputRef = useRef<HTMLInputElement>(null)
   const addTarefa = useAddTarefa()
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -9,13 +11,17 @@ export function App() {
     const formData = new FormData(event.currentTarget)
 
     addTarefa(formData.get('nome') as string)
-  }
+
+    if (inputRef.current?.value) {
+      inputRef.current.value = ''
+    }
+  } 
 
   return (
     <div>
       <h1>Tarefas</h1>
       <form onSubmit={handleOnSubmit}>
-        <input type="text" name="nome" />
+        <input type="text" name="nome" ref={inputRef} />
         <button type="submit">Adicionar tarefa</button>
       </form>
       <ListaDeTarefas />
