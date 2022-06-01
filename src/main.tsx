@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 0,
+      retry: 1,
       suspense: true,
     },
   },
