@@ -21,8 +21,10 @@ export function App() {
     <div>
       <h1>Tarefas</h1>
       <form onSubmit={handleOnSubmit}>
-        <input type="text" name="nome" ref={inputRef} />
-        <button type="submit">Adicionar tarefa</button>
+        <label htmlFor="nome">Adicionar tarefa</label>
+        <input type="text" name="nome" id="nome" ref={inputRef} />
+        
+        <button type="submit">Adicionar</button>
       </form>
       <ListaDeTarefas />
     </div>
