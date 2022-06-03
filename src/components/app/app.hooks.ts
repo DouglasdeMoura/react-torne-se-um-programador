@@ -7,17 +7,16 @@ type Tarefa = {
   concluida: boolean
 }
 
-const getTarefas = (): Promise<Tarefa[]> =>
-  client.get('/tarefas').then(response => response.data)
-
-const addTarefa = (nome: string) => 
-  client.post('/tarefas', { nome }).then(response => response.data)
-
-
 type UpdateTarefa = Partial<Pick<Tarefa, 'nome' | 'concluida'>> & Pick<Tarefa, 'id'>
 
+const getTarefas = () =>
+  client.get<Tarefa[]>('/tarefas').then(response => response.data)
+
+const addTarefa = (nome: string) => 
+  client.post<Tarefa>('/tarefas', { nome }).then(response => response.data)
+
 const updateTarefa = ({ id, nome, concluida }: UpdateTarefa) =>
-  client.patch(`/tarefas/${id}`, { nome, concluida }).then(response => response.data)
+  client.patch<Tarefa>(`/tarefas/${id}`, { nome, concluida }).then(response => response.data)
 
 export const useTarefas = () => useQuery(
   'tarefas',
@@ -33,9 +32,9 @@ export const useAddTarefa = () => {
     nome,
     {
       onSuccess: (data) => {
-        queryClient.setQueryData(
+        queryClient.setQueryData<Tarefa[]>(
           'tarefas',
-          (tarefas) => [...(tarefas as Tarefa[]), data]
+          (tarefas) => tarefas ? [...tarefas, data] : [data]
         )
     }
   })
@@ -47,15 +46,19 @@ export const useUpdateTarefa = () => {
 
   return (tarefa: UpdateTarefa) => mutation.mutate(tarefa, {
     onSuccess: (data) => {
-      queryClient.setQueryData(
+      queryClient.setQueryData<Tarefa[]>(
         'tarefas',
-        (tarefas) => (tarefas as Tarefa[]).map(t => {
-          if (t.id === data.id) {
-            return data
-          }
+        (tarefas) => {
+          if (!tarefas) return [data]
 
-          return t
-        })
+          return tarefas.map(t => {
+            if (t.id === data.id) {
+              return data
+            }
+  
+            return t
+          })
+        }
       )
     },
   })
