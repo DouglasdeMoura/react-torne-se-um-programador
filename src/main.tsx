@@ -1,9 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { App } from './components/app'
-import { QueryClient, QueryClientProvider, QueryErrorResetBoundary } from 'react-query'
 import { ErrorBoundary } from 'react-error-boundary'
+import {
+  QueryClient,
+  QueryClientProvider,
+  QueryErrorResetBoundary,
+} from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+
+import { App } from './components/app'
 import { Loading } from './components/loading/loading'
 
 if (process.env.NODE_ENV === 'development') {
@@ -30,8 +35,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               fallbackRender={({ error, resetErrorBoundary }) => (
                 <div>
                   <h3>Ocorreu um erro!</h3>
-                  <button onClick={() => resetErrorBoundary()}>Tente novamente</button>
-                  <pre style={{ whiteSpace: "normal" }}>{error.message}</pre>
+                  <button onClick={() => resetErrorBoundary()}>
+                    Tente novamente
+                  </button>
+                  <pre style={{ whiteSpace: 'normal' }}>{error.message}</pre>
                 </div>
               )}
               onReset={reset}
@@ -45,5 +52,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </div>
-  </React.StrictMode>
+  </React.StrictMode>,
 )
