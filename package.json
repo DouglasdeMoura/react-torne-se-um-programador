@@ -9,7 +9,8 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "lint": "eslint src/**/**.{ts,tsx}",
-    "lint:fix": "yarn lint --fix"
+    "lint:fix": "yarn lint --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -20,6 +21,8 @@
     "react-query": "^3.39.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.2",
+    "@commitlint/config-conventional": "^17.0.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/react-hooks": "^8.0.0",
@@ -41,6 +44,7 @@
     "eslint-plugin-react-hooks": "^4.5.0",
     "eslint-plugin-storybook": "^0.5.12",
     "eslint-plugin-testing-library": "^5.5.1",
+    "husky": "^8.0.1",
     "jsdom": "^19.0.0",
     "msw": "^0.39.2",
     "prettier": "^2.6.2",
