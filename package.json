@@ -58,6 +58,9 @@
     "workerDirectory": "public"
   },
   "lint-staged": {
-    "*.{ts,tsx,jsx,js}": "eslint --cache --fix"
+    "*.{ts,tsx,jsx,js}": [
+      "eslint --cache --fix",
+      "vitest --run related"
+    ]
   }
 }
