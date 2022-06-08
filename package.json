@@ -46,6 +46,7 @@
     "eslint-plugin-testing-library": "^5.5.1",
     "husky": "^8.0.1",
     "jsdom": "^19.0.0",
+    "lint-staged": ">=10",
     "msw": "^0.39.2",
     "prettier": "^2.6.2",
     "react-test-renderer": "^18.1.0",
@@ -55,5 +56,8 @@
   },
   "msw": {
     "workerDirectory": "public"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,jsx,js}": "eslint --cache --fix"
   }
 }
