@@ -27,7 +27,7 @@ const queryClient = new QueryClient({
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <div style={{ margin: '0 auto', maxWidth: '568px' }}>
+    <div className="container">
       <QueryClientProvider client={queryClient}>
         <QueryErrorResetBoundary>
           {({ reset }) => (
