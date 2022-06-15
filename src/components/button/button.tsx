@@ -1,5 +1,7 @@
 import { FC } from 'react'
 
+import { classNames as cn } from '../../utils/class-names'
+
 type ButtonProps = {
   children: React.ReactNode
   variant?: 'primary' | 'secondary' | 'contrast'
@@ -14,9 +16,7 @@ export const Button: FC<ButtonProps> = ({
   ...props
 }) => (
   <button
-    className={[className, variant, outlined && 'outline']
-      .filter((className) => Boolean(className))
-      .join(' ')}
+    className={cn([className, variant, outlined && 'outline'])}
     {...props}
   >
     {children}
