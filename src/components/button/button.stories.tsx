@@ -14,6 +14,12 @@ Primary.args = {
   children: 'Button',
 }
 
+export const PrimaryLoading = Template.bind({})
+PrimaryLoading.args = {
+  children: 'Button',
+  loading: true,
+}
+
 export const Secondary = Template.bind({})
 Secondary.args = {
   children: 'Button',
