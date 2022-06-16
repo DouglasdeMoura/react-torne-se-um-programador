@@ -73,6 +73,7 @@
           ],
           "/^@testing-library/",
           "/^@storybook/",
+          "/^~\/*/",
           [
             "parent",
             "sibling",
