@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { classNames as cn } from '../../utils/class-names'
+import { classNames as cn } from '~/utils/class-names'
 
 type ButtonProps = {
   children: React.ReactNode
