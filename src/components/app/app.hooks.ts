@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
-import { client } from '../../api/client'
+import { client } from '~/api/client'
 
 type Tarefa = {
   id: number

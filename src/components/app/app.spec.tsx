@@ -4,7 +4,8 @@ import {
   waitFor,
   userEvent,
   waitForElementToBeRemoved,
-} from '../../utils/test-utils'
+} from '~/utils/test-utils'
+
 import { App } from './app'
 
 describe('<App />', () => {
