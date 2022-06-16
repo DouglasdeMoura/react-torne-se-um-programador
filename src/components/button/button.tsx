@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { classNames as cn } from '~/utils/class-names'
 
 type ButtonProps = {
-  children: React.ReactNode
+  children?: React.ReactNode
   variant?: 'primary' | 'secondary' | 'contrast'
   outlined?: boolean
   loading?: boolean
