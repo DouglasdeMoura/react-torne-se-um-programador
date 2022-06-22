@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 
 import { Button } from '~/components/button'
+import { Heading } from '~/components/heading'
 
 import { useAddTarefa, useTarefas, useUpdateTarefa } from './app.hooks'
 
@@ -22,7 +23,7 @@ export function App() {
 
   return (
     <div>
-      <h1>Tarefas</h1>
+      <Heading>Tarefas</Heading>
       <form onSubmit={handleOnSubmit}>
         <label htmlFor="nome">Adicionar tarefa</label>
         <input type="text" name="nome" id="nome" ref={inputRef} />
