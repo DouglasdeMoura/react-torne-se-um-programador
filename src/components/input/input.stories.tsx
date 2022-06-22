@@ -11,7 +11,17 @@ const Template: ComponentStory<typeof Input> = (args) => <Input {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  label: 'Minimum 5 characters',
-  error: 'The minLength is 5',
-  minLength: 5,
+  label: 'Label',
+}
+
+export const Valid = Template.bind({})
+Valid.args = {
+  label: 'Label',
+  'aria-invalid': 'false',
+}
+
+export const Invalid = Template.bind({})
+Invalid.args = {
+  label: 'Label',
+  'aria-invalid': 'true',
 }

@@ -107,26 +107,9 @@ export const Input: FC<InputProps> = forwardRef(
     ref,
   ) => {
     const inputRef = useRef<HTMLInputElement>(null)
-    const [valid, setValid] = useState<boolean | undefined>()
     const [errors, setErrors] = useState<
       ValidationResult['errors'] | undefined
     >()
-
-    const validation = () => {
-      if (errors) {
-        return {
-          'aria-invalid': true,
-        }
-      }
-
-      if (valid) {
-        return {
-          'aria-invalid': false,
-        }
-      }
-
-      return {}
-    }
 
     const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
       onBlur?.(e)
@@ -138,8 +121,6 @@ export const Input: FC<InputProps> = forwardRef(
         onError?.(inputRef.current?.value || '', errors || [])
         return
       }
-
-      setValid(true)
 
       onValidate?.(inputRef.current?.value || '')
     }
@@ -153,7 +134,6 @@ export const Input: FC<InputProps> = forwardRef(
 
       if (errors) {
         setErrors(undefined)
-        setValid(false)
       }
     }
 
@@ -165,7 +145,6 @@ export const Input: FC<InputProps> = forwardRef(
           onChange={handleOnChange}
           onBlur={handleOnBlur}
           ref={useMergedRef(ref, inputRef)}
-          {...validation()}
           {...props}
         />
         {errors?.map((err) => (
