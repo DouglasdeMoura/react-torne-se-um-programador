@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, forwardRef } from 'react'
 
 import { classNames as cn } from '~/utils/class-names'
 
@@ -7,21 +7,22 @@ type ButtonProps = {
   variant?: 'primary' | 'secondary' | 'contrast'
   outlined?: boolean
   loading?: boolean
-} & React.ComponentProps<'button'>
+} & React.ComponentPropsWithRef<'button'>
 
-export const Button: FC<ButtonProps> = ({
-  children,
-  variant = 'primary',
-  outlined,
-  className,
-  loading,
-  ...props
-}) => (
-  <button
-    aria-busy={loading}
-    className={cn([className, variant, outlined && 'outline'])}
-    {...props}
-  >
-    {children}
-  </button>
+export const Button: FC<ButtonProps> = forwardRef(
+  (
+    { children, variant = 'primary', outlined, className, loading, ...props },
+    ref,
+  ) => (
+    <button
+      aria-busy={loading}
+      className={cn([className, variant, outlined && 'outline'])}
+      ref={ref}
+      {...props}
+    >
+      {children}
+    </button>
+  ),
 )
+
+Button.displayName = 'Button'
