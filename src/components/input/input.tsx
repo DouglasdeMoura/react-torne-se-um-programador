@@ -84,6 +84,7 @@ function validate(
 type InputProps = {
   label: React.ReactNode
   error?: ErrorMessages
+  help?: React.ReactNode
   mask?: (value: string) => string
   custom?: (value: string) => boolean
   onError?: (value: string, errors: ValidationResult['errors']) => void
@@ -102,6 +103,7 @@ export const Input: FC<InputProps> = forwardRef(
       onError,
       onValidate,
       id,
+      help,
       ...props
     },
     ref,
@@ -147,8 +149,14 @@ export const Input: FC<InputProps> = forwardRef(
           ref={useMergedRef(ref, inputRef)}
           {...props}
         />
+        {help && <small>{help}</small>}
         {errors?.map((err) => (
-          <small key={err.type}>{err.message}</small>
+          <small
+            key={err.type}
+            style={{ color: 'var(--form-element-invalid-active-border-color)' }}
+          >
+            {err.message}
+          </small>
         ))}
       </>
     )
