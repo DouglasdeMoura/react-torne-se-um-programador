@@ -6,9 +6,10 @@ import {
   QueryErrorResetBoundary,
 } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Outlet } from 'react-router-dom'
 
 import { Loading } from '~/components/loading/loading'
+import { Login } from '~/pages/login'
 import { Tasks } from '~/pages/tasks'
 
 const queryClient = new QueryClient({
@@ -36,7 +37,9 @@ export const App = () => (
           )}
           onReset={reset}
         >
-          <AppRoutes />
+          <Container>
+            <AppRoutes />
+          </Container>
         </ErrorBoundary>
       )}
     </QueryErrorResetBoundary>
@@ -44,17 +47,22 @@ export const App = () => (
   </QueryClientProvider>
 )
 
-const AppRoutes = () => (
+type ContainerProps = {
+  children?: React.ReactNode
+}
+
+const Container: React.FC<ContainerProps> = ({ children }) => (
   <div className="container">
-    <Routes>
-      <Route
-        path="tasks"
-        element={
-          <React.Suspense fallback={<Loading />}>
-            <Tasks />
-          </React.Suspense>
-        }
-      />
-    </Routes>
+    {children}
+    <React.Suspense fallback={<Loading />}>
+      <Outlet />
+    </React.Suspense>
   </div>
+)
+
+const AppRoutes = () => (
+  <Routes>
+    <Route path="tasks" element={<Tasks />} />
+    <Route path="login" element={<Login />} />
+  </Routes>
 )
