@@ -6,11 +6,11 @@ import {
   waitForElementToBeRemoved,
 } from '~/utils/test-utils'
 
-import { App } from './app'
+import { Tasks } from './tasks'
 
-describe('<App />', () => {
+describe('<Tasks />', () => {
   it('deve renderizar o componente, adicionar uma tarefa e marcá-la e desmarcá-la como concluída', async () => {
-    render(<App />)
+    render(<Tasks />)
 
     expect(
       await screen.findByRole('heading', { name: 'Tarefas' }),

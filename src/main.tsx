@@ -8,8 +8,8 @@ import {
 } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 
-import { App } from '~/components/app'
 import { Loading } from '~/components/loading/loading'
+import { Tasks } from '~/components/tasks'
 
 if (process.env.NODE_ENV === 'development') {
   const { worker } = await import('./mocks/browser')
@@ -44,7 +44,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               onReset={reset}
             >
               <React.Suspense fallback={<Loading />}>
-                <App />
+                <Tasks />
               </React.Suspense>
             </ErrorBoundary>
           )}

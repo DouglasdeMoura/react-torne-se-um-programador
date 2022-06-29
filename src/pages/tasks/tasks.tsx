@@ -3,9 +3,9 @@ import { useRef } from 'react'
 import { Button } from '~/components/button'
 import { Heading } from '~/components/heading'
 
-import { useAddTarefa, useTarefas, useUpdateTarefa } from './app.hooks'
+import { useAddTarefa, useTarefas, useUpdateTarefa } from './tasks.hooks'
 
-export function App() {
+export function Tasks() {
   const inputRef = useRef<HTMLInputElement>(null)
   const addTarefa = useAddTarefa()
 
