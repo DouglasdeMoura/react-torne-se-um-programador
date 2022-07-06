@@ -74,4 +74,40 @@ export const handlers = [
       return res(ctx.status(200), ctx.json(getTarefa(id)))
     },
   ),
+  rest.post<{ usuario: string; senha: string }>(
+    'http://localhost:3000/api/login',
+    (req, res, ctx) => {
+      const { usuario, senha } = req.body
+
+      if (usuario === 'admin' && senha === 'admin') {
+        return res(ctx.status(200), ctx.json({ token: 'admin' }))
+      }
+
+      const errors = []
+
+      if (usuario !== 'admin') {
+        errors.push({
+          name: 'usuario',
+          reason: 'Usuário inválido',
+        })
+      }
+
+      if (senha !== 'admin') {
+        errors.push({
+          name: 'senha',
+          reason: 'Senha inválida',
+        })
+      }
+
+      return res(
+        ctx.status(401),
+        ctx.set('Content-type', 'application/problem+json'),
+        ctx.json({
+          type: 'http://localhost:3000/api/login',
+          title: 'Usuário ou senha inválidos',
+          invalidParams: errors,
+        }),
+      )
+    },
+  ),
 ]
