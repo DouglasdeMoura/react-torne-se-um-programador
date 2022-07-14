@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 import { Button } from '~/components/button'
 import { Heading } from '~/components/heading'
@@ -20,6 +20,14 @@ type UsernameFormElement = {
 
 export const Login = () => {
   const mutation = useLogin()
+  const errorRef = useRef<HTMLDivElement>(null)
+
+  const setErrorHiddenStatus = (status: boolean) => {
+    if (errorRef.current) {
+      console.log(status)
+      errorRef.current.hidden = status
+    }
+  }
 
   const handleOnSubmit = (event: React.FormEvent<UsernameFormElement>) => {
     event.preventDefault()
@@ -29,8 +37,12 @@ export const Login = () => {
     }
 
     mutation.mutate(credentials, {
-      onSuccess: (data, variables, context) => {
+      onSuccess: (data) => {
+        // TODO: redirect to dashboard
         console.log(data)
+      },
+      onError: () => {
+        setErrorHiddenStatus(false)
       },
     })
   }
@@ -38,14 +50,18 @@ export const Login = () => {
   return (
     <div className={styles.formContainer}>
       <Heading as="h2">Entre na sua conta</Heading>
-      {mutation?.error?.response?.data?.title &&
-        mutation?.error?.response?.data?.title}
+
       <form onSubmit={handleOnSubmit}>
+        <div className={styles.errorContainer} ref={errorRef} hidden>
+          {mutation?.error?.title && mutation.error.title}
+        </div>
+
         <Input
           label="Usuário"
           required
           error="Usuário inválido"
           name="usuario"
+          onChange={() => setErrorHiddenStatus(true)}
         />
         <Input
           label="Senha"
@@ -53,6 +69,7 @@ export const Login = () => {
           required
           error="Digite sua senha"
           name="senha"
+          onChange={() => setErrorHiddenStatus(true)}
         />
         <Button>Entrar</Button>
       </form>

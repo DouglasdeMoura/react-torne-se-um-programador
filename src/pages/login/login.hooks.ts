@@ -2,7 +2,7 @@ import { useMutation } from 'react-query'
 
 import { client } from '~/api/client'
 
-import { AxiosResponse } from 'axios'
+import axios, { AxiosError } from 'axios'
 
 type ProblemDetails = {
   type?: string
@@ -27,10 +27,18 @@ type Credentials = { usuario: string; senha: string }
 
 const login = ({ usuario, senha }: Credentials) =>
   client
-    .post<User, AxiosResponse<User, ProblemDetails>>('/api/login', {
+    .post<User>('/api/login', {
       usuario,
       senha,
     })
     .then((res) => res.data)
+    .catch((err: Error | AxiosError<ProblemDetails>) => {
+      if (axios.isAxiosError(err)) {
+        throw err?.response?.data
+      } else {
+        throw err
+      }
+    })
 
-export const useLogin = () => useMutation(login)
+export const useLogin = () =>
+  useMutation<User, ProblemDetails, Credentials>(login)
