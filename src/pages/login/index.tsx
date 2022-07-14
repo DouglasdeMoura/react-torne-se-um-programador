@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from '~/components/button'
 import { Heading } from '~/components/heading'
@@ -21,6 +22,7 @@ type UsernameFormElement = {
 export const Login = () => {
   const mutation = useLogin()
   const errorRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
 
   const setErrorHiddenStatus = (status: boolean) => {
     if (errorRef.current) {
@@ -37,9 +39,8 @@ export const Login = () => {
     }
 
     mutation.mutate(credentials, {
-      onSuccess: (data) => {
-        // TODO: redirect to dashboard
-        console.log(data)
+      onSuccess: () => {
+        navigate('/dashboard')
       },
       onError: () => {
         setErrorHiddenStatus(false)
@@ -62,6 +63,7 @@ export const Login = () => {
           error="Usuário inválido"
           name="usuario"
           onChange={() => setErrorHiddenStatus(true)}
+          id="usuario"
         />
         <Input
           label="Senha"
@@ -69,6 +71,7 @@ export const Login = () => {
           required
           error="Digite sua senha"
           name="senha"
+          id="senha"
           onChange={() => setErrorHiddenStatus(true)}
         />
         <Button>Entrar</Button>
