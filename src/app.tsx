@@ -12,6 +12,9 @@ import { Loading } from '~/components/loading/loading'
 import { Login } from '~/pages/login'
 import { Tasks } from '~/pages/tasks'
 
+import { Dashboard } from './pages/dashboard'
+import { Logout } from './pages/logout'
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -64,5 +67,7 @@ const AppRoutes = () => (
   <Routes>
     <Route path="tasks" element={<Tasks />} />
     <Route path="login" element={<Login />} />
+    <Route path="logout" element={<Logout />} />
+    <Route path="dashboard" element={<Dashboard />} />
   </Routes>
 )
