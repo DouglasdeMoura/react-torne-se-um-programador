@@ -80,7 +80,10 @@ export const handlers = [
       const { usuario, senha } = req.body
 
       if (usuario === 'admin' && senha === 'admin') {
-        return res(ctx.status(200), ctx.json({ token: 'admin' }))
+        return res(
+          ctx.status(200),
+          ctx.json({ token: '35b49330-a4b0-4193-81f5-56bff5899c20' }),
+        )
       }
 
       const errors = []
