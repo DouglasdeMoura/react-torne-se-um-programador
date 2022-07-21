@@ -39,7 +39,8 @@ export const Login = () => {
     }
 
     mutation.mutate(credentials, {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        localStorage.setItem('token', data.token)
         navigate('/dashboard')
       },
       onError: () => {
