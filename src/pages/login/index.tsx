@@ -5,6 +5,7 @@ import { Button } from '~/components/button'
 import { Heading } from '~/components/heading'
 import { Input } from '~/components/input'
 import { serializeFormData } from '~/utils/serialize-form-data'
+import { setToken } from '~/utils/token'
 
 import { useLogin } from './login.hooks'
 
@@ -40,7 +41,7 @@ export const Login = () => {
 
     mutation.mutate(credentials, {
       onSuccess: (data) => {
-        localStorage.setItem('token', data.token)
+        setToken(data.token)
         navigate('/dashboard')
       },
       onError: () => {
