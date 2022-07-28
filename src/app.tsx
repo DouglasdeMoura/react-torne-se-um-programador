@@ -13,6 +13,7 @@ import { Login } from '~/pages/login'
 import { Tasks } from '~/pages/tasks'
 
 import { IsAuthenticated } from './components/is-authenticated'
+import { Menu } from './components/menu'
 import { Dashboard } from './pages/dashboard'
 import { Logout } from './pages/logout'
 
@@ -56,12 +57,12 @@ type ContainerProps = {
 }
 
 const Container: React.FC<ContainerProps> = ({ children }) => (
-  <div className="container">
+  <>
     {children}
     <React.Suspense fallback={<Loading />}>
       <Outlet />
     </React.Suspense>
-  </div>
+  </>
 )
 
 const AppRoutes = () => (
@@ -69,8 +70,10 @@ const AppRoutes = () => (
     <Route path="login" element={<Login />} />
     <Route path="logout" element={<Logout />} />
     <Route path="dashboard" element={<IsAuthenticated />}>
-      <Route path="tasks" element={<Tasks />} />
-      <Route index element={<Dashboard />} />
+      <Route element={<Menu />}>
+        <Route path="tasks" element={<Tasks />} />
+        <Route index element={<Dashboard />} />
+      </Route>
     </Route>
   </Routes>
 )
