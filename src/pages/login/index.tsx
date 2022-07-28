@@ -27,7 +27,6 @@ export const Login = () => {
 
   const setErrorHiddenStatus = (status: boolean) => {
     if (errorRef.current) {
-      console.log(status)
       errorRef.current.hidden = status
     }
   }
