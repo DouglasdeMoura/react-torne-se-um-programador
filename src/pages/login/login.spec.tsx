@@ -1,14 +1,16 @@
-import { Route, Routes } from 'react-router-dom'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
 import { render, userEvent, screen, waitFor } from '~/utils/test-utils'
 
 import { Login } from '.'
 
 const App = () => (
-  <Routes>
-    <Route path="/dashboard" element={<div data-testid="dashboard" />} />
-    <Route path="/" element={<Login />} />
-  </Routes>
+  <MemoryRouter initialEntries={['/']}>
+    <Routes>
+      <Route path="/dashboard" element={<div data-testid="dashboard" />} />
+      <Route path="/" element={<Login />} />
+    </Routes>
+  </MemoryRouter>
 )
 
 describe('<Login />', () => {

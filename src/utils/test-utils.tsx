@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { MemoryRouter } from 'react-router-dom'
 
 import {
   render as testingLibraryRender,
@@ -15,8 +14,6 @@ export const render = (
   { ...renderOptions }: RenderOptions = {},
 ) =>
   testingLibraryRender(
-    <QueryClientProvider client={new QueryClient()}>
-      <MemoryRouter initialEntries={['/']}>{ui}</MemoryRouter>
-    </QueryClientProvider>,
+    <QueryClientProvider client={new QueryClient()}>{ui}</QueryClientProvider>,
     renderOptions,
   )
