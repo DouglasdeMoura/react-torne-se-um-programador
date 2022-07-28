@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { Button } from '~/components/button'
 import { Heading } from '~/components/heading'
@@ -24,6 +24,7 @@ export const Login = () => {
   const mutation = useLogin()
   const errorRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
   const setErrorHiddenStatus = (status: boolean) => {
     if (errorRef.current) {
@@ -41,7 +42,9 @@ export const Login = () => {
     mutation.mutate(credentials, {
       onSuccess: (data) => {
         setToken(data.token)
-        navigate('/dashboard')
+        const redirectPath = searchParams.get('redirectPath')
+
+        navigate(redirectPath ? redirectPath : '/dashboard')
       },
       onError: () => {
         setErrorHiddenStatus(false)
