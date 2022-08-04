@@ -1,11 +1,5 @@
 import React from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import {
-  QueryClient,
-  QueryClientProvider,
-  QueryErrorResetBoundary,
-} from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
 import { Routes, Route, Outlet } from 'react-router-dom'
 
 import { Loading } from '~/components/loading/loading'
@@ -16,6 +10,13 @@ import { IsAuthenticated } from './components/is-authenticated'
 import { Menu } from './components/menu'
 import { Dashboard } from './pages/dashboard'
 import { Logout } from './pages/logout'
+
+import {
+  QueryClient,
+  QueryClientProvider,
+  QueryErrorResetBoundary,
+} from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const queryClient = new QueryClient({
   defaultOptions: {

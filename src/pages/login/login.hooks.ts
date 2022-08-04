@@ -1,7 +1,6 @@
-import { useMutation } from 'react-query'
-
 import { client } from '~/api/client'
 
+import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 
 type ProblemDetails = {

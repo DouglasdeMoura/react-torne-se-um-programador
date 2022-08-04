@@ -1,6 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-
 import { client } from '~/api/client'
+
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 type Tarefa = {
   id: number
@@ -23,7 +23,7 @@ const updateTarefa = ({ id, nome, concluida }: UpdateTarefa) =>
     .then((response) => response.data)
 
 export const useTarefas = () =>
-  useQuery('tarefas', getTarefas, { refetchOnWindowFocus: false })
+  useQuery(['tarefas'], getTarefas, { refetchOnWindowFocus: false })
 
 export const useAddTarefa = () => {
   const mutation = useMutation(addTarefa)
@@ -32,7 +32,7 @@ export const useAddTarefa = () => {
   return (nome: string) =>
     mutation.mutate(nome, {
       onSuccess: (data) => {
-        queryClient.setQueryData<Tarefa[]>('tarefas', (tarefas) =>
+        queryClient.setQueryData<Tarefa[]>(['tarefas'], (tarefas) =>
           tarefas ? [...tarefas, data] : [data],
         )
       },
@@ -46,7 +46,7 @@ export const useUpdateTarefa = () => {
   return (tarefa: UpdateTarefa) =>
     mutation.mutate(tarefa, {
       onSuccess: (data) => {
-        queryClient.setQueryData<Tarefa[]>('tarefas', (tarefas) => {
+        queryClient.setQueryData<Tarefa[]>(['tarefas'], (tarefas) => {
           if (!tarefas) return [data]
 
           return tarefas.map((t) => {
