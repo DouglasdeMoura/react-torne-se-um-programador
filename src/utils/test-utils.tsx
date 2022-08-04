@@ -4,16 +4,17 @@ import {
   render as testingLibraryRender,
   RenderOptions,
 } from '@testing-library/react'
-
-export { default as userEvent } from '@testing-library/user-event'
+import userEvent from '@testing-library/user-event'
 
 export * from '@testing-library/react'
 
 export const render = (
   ui: React.ReactElement,
   { ...renderOptions }: RenderOptions = {},
-) =>
-  testingLibraryRender(
+) => ({
+  user: userEvent.setup(),
+  ...testingLibraryRender(
     <QueryClientProvider client={new QueryClient()}>{ui}</QueryClientProvider>,
     renderOptions,
-  )
+  ),
+})
