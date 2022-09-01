@@ -3,26 +3,26 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "lint": "eslint src",
-    "lint:fix": "yarn lint --fix",
-    "prepare": "husky install",
     "storybook": "start-storybook -p 6006 --output-dir dist/storybook",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@react-hook/merged-ref": "^1.3.2",
     "@tanstack/react-query": "^4.0.10",
     "axios": "^0.27.2",
     "iconoir-react": "^5.1.4",
+    "next": "^12.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-error-boundary": "^3.1.4",
-    "react-router-dom": "6"
+    "react-error-boundary": "^3.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",

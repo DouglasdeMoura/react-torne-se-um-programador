@@ -2,7 +2,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
 import { render, screen, waitFor } from '~/utils/test-utils'
 
-import { Login } from '.'
+import Login from './index.page'
 
 const App = ({ initialEntry = '/' }: { initialEntry?: string }) => (
   <MemoryRouter initialEntries={[initialEntry]}>

@@ -1,31 +1,33 @@
-import { FC, Suspense } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import Link from 'next/link'
+import { Suspense } from 'react'
 
 import { Loading } from '../loading/loading'
 
 import styles from './menu.module.css'
 
-export const Menu: FC = () => (
+type MenuProps = {
+  children?: React.ReactNode
+}
+
+export const Menu: React.FC<MenuProps> = ({ children }) => (
   <div className={styles.wrapper}>
     <aside className={styles.menu}>
       <nav>
         <ul>
           <li>
-            <Link to="/dashboard">Início</Link>
+            <Link href="/dashboard">Início</Link>
           </li>
           <li>
-            <Link to="/dashboard/tasks">Tarefas</Link>
+            <Link href="/dashboard/tasks">Tarefas</Link>
           </li>
           <li>
-            <Link to="/logout">Sair</Link>
+            <Link href="/logout">Sair</Link>
           </li>
         </ul>
       </nav>
     </aside>
     <main className="container">
-      <Suspense fallback={<Loading />}>
-        <Outlet />
-      </Suspense>
+      <Suspense fallback={<Loading />}>{children}</Suspense>
     </main>
   </div>
 )

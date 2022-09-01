@@ -1,5 +1,5 @@
+import { useRouter } from 'next/router'
 import React, { useRef } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { Button } from '~/components/button'
 import { Heading } from '~/components/heading'
@@ -23,8 +23,7 @@ type UsernameFormElement = {
 export const Login = () => {
   const mutation = useLogin()
   const errorRef = useRef<HTMLDivElement>(null)
-  const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
+  const router = useRouter()
 
   const setErrorHiddenStatus = (status: boolean) => {
     if (errorRef.current) {
@@ -42,9 +41,9 @@ export const Login = () => {
     mutation.mutate(credentials, {
       onSuccess: (data) => {
         setToken(data.token)
-        const redirectPath = searchParams.get('redirectPath')
+        const redirectPath = router.query?.redirectPath as string
 
-        navigate(redirectPath ? redirectPath : '/dashboard')
+        router.push(redirectPath ? redirectPath : '/dashboard')
       },
       onError: () => {
         setErrorHiddenStatus(false)

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestHeaders } from 'axios'
 
-const token = localStorage.getItem('token') || ''
+const token = typeof window !== 'undefined' ? localStorage.getItem('token') : ''
 
 const headers: AxiosRequestHeaders = {
   'Content-Type': 'application/json',

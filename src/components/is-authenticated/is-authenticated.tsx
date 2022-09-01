@@ -1,14 +1,22 @@
-import { FC } from 'react'
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 import { getToken } from '~/utils/token'
 
-export const IsAuthenticated: FC = () => {
-  const { pathname } = useLocation()
+type IsAuthenticatedProps = {
+  children?: React.ReactNode
+}
 
-  if (!getToken()) {
-    return <Navigate to={`/login?redirectPath=${pathname}`} />
-  }
+export const IsAuthenticated: React.FC<IsAuthenticatedProps> = ({
+  children,
+}) => {
+  const router = useRouter()
 
-  return <Outlet />
+  useEffect(() => {
+    if (!getToken()) {
+      router.push(`/login?redirectPath=${router.pathname}`)
+    }
+  }, [router])
+
+  return <>{getToken() ? children : null}</>
 }
