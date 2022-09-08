@@ -1,28 +1,24 @@
-import { render, screen } from '~/utils/test-utils'
+import { render, screen, waitFor, mockNextRouter } from '~/utils/test-utils'
 
 import { IsAuthenticated } from './is-authenticated'
 
-vi.mock('react-router-dom', () => ({
-  Navigate: ({ to }: { to: string }) => <div data-testid="navigate">{to}</div>,
-  Outlet: () => <div data-testid="outlet"></div>,
-  useLocation: () => ({
-    pathname: '/redirect',
-  }),
-}))
+const router = mockNextRouter({ pathname: '/redirect' })
 
 describe('<IsAuthenticated />', () => {
-  it('deve redirecionar o usuário para página de login quando ele não estiver autenticado', () => {
+  it('deve redirecionar o usuário para página de login quando ele não estiver autenticado', async () => {
     render(<IsAuthenticated />)
 
-    expect(screen.getByTestId('navigate')).toHaveTextContent('/login')
+    await waitFor(() => {
+      expect(router.push).toHaveBeenCalledWith('/login?redirectPath=/redirect')
+    })
   })
 
   it('deve renderizar os componentes filhos', () => {
     global.localStorage.setItem('token', 'mock_token')
 
-    render(<IsAuthenticated />)
+    render(<IsAuthenticated>only for authenticated users</IsAuthenticated>)
 
-    expect(screen.getByTestId('outlet')).toBeInTheDocument()
+    expect(screen.getByText('only for authenticated users')).toBeInTheDocument()
 
     global.localStorage.removeItem('token')
   })
