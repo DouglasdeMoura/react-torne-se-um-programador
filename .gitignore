@@ -27,3 +27,6 @@ dist-ssr
 coverage
 
 .next
+
+dev.db
+dev.db-journal
