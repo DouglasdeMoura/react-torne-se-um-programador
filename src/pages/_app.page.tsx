@@ -41,6 +41,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}
       <Hydrate state={pageProps.dehydratedState}>
         <QueryErrorResetBoundary>
           {({ reset }) => (
