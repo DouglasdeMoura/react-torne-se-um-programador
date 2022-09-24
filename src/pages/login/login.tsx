@@ -1,3 +1,4 @@
+import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import React, { useRef } from 'react'
 
@@ -5,9 +6,6 @@ import { Button } from '~/components/button'
 import { Heading } from '~/components/heading'
 import { Input } from '~/components/input'
 import { serializeFormData } from '~/utils/serialize-form-data'
-import { setToken } from '~/utils/token'
-
-import { useLogin } from './login.hooks'
 
 import styles from './login.module.css'
 
@@ -21,7 +19,6 @@ type UsernameFormElement = {
 } & HTMLFormElement
 
 export const Login = () => {
-  const mutation = useLogin()
   const errorRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
@@ -33,21 +30,19 @@ export const Login = () => {
 
   const handleOnSubmit = (event: React.FormEvent<UsernameFormElement>) => {
     event.preventDefault()
+
     const credentials = serializeFormData(event.currentTarget) as {
       usuario: string
       senha: string
     }
 
-    mutation.mutate(credentials, {
-      onSuccess: (data) => {
-        setToken(data.token)
-        const redirectPath = router.query?.redirectPath as string
+    const redirectPath = router.query?.redirectPath as string
 
-        router.push(redirectPath ? redirectPath : '/dashboard')
-      },
-      onError: () => {
-        setErrorHiddenStatus(false)
-      },
+    signIn('credentials', {
+      redirect: true,
+      callbackUrl: redirectPath ? redirectPath : '/dashboard',
+      username: credentials.usuario,
+      password: credentials.senha,
     })
   }
 
@@ -56,8 +51,14 @@ export const Login = () => {
       <Heading as="h2">Entre na sua conta</Heading>
 
       <form onSubmit={handleOnSubmit}>
-        <div className={styles.errorContainer} ref={errorRef} hidden>
-          {mutation?.error?.title && mutation.error.title}
+        <div
+          className={styles.errorContainer}
+          ref={errorRef}
+          hidden={!router.query.error}
+        >
+          {router.query.error === 'CredentialsSignin'
+            ? 'Usuário ou senha inválidos'
+            : null}
         </div>
 
         <Input
