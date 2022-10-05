@@ -36,8 +36,6 @@ describe('<Login />', () => {
   })
 
   // it('deve exibir a mensagem de erro quando as credenciais forem inválidas', async () => {
-  //   // query.mockImplementationOnce(() => ({ error: 'CredentialsSignin' }))
-
   //   const { user } = render(<Login />)
 
   //   await user.type(screen.getByLabelText('Usuário'), 'teste')
@@ -56,31 +54,37 @@ describe('<Login />', () => {
   //   })
   // })
 
-  // it('deve fazer o login do usuário e redirecionar para /dashboard', async () => {
-  //   const router = mockNextRouter({ pathname: '/login' })
-  //   const { user } = render(<Login />)
+  it('deve fazer o login do usuário e redirecionar para /dashboard', async () => {
+    const { user } = render(<Login />)
 
-  //   await user.type(screen.getByLabelText('Usuário'), 'admin')
-  //   await user.type(screen.getByLabelText('Senha'), 'admin')
-  //   user.click(screen.getByText('Entrar'))
+    await user.type(screen.getByLabelText('Usuário'), 'admin')
+    await user.type(screen.getByLabelText('Senha'), 'admin')
+    user.click(screen.getByText('Entrar'))
 
-  //   await waitFor(() => {
-  //     expect(router.push).toHaveBeenCalledWith('/dashboard')
-  //   })
-  // })
+    await waitFor(() => {
+      expect(signIn).toHaveBeenCalledWith('credentials', {
+        callbackUrl: '/dashboard',
+        password: 'admin',
+        redirect: true,
+        username: 'admin',
+      })
+    })
+  })
 
-  // it('deve redirecionar o usuário para a URL presente em ?redirectPath=', async () => {
-  //   const router = mockNextRouter({
-  //     pathname: '/login?redirectPath=/dashboard',
-  //   })
-  //   const { user } = render(<Login />)
+  it('deve redirecionar o usuário para a URL presente em ?redirectPath=', async () => {
+    const { user } = render(<Login />)
 
-  //   await user.type(screen.getByLabelText('Usuário'), 'admin')
-  //   await user.type(screen.getByLabelText('Senha'), 'admin')
-  //   user.click(screen.getByText('Entrar'))
+    await user.type(screen.getByLabelText('Usuário'), 'admin')
+    await user.type(screen.getByLabelText('Senha'), 'admin')
+    await user.click(screen.getByText('Entrar'))
 
-  //   await waitFor(() => {
-  //     expect(router.push).toHaveBeenCalledWith('/dashboard')
-  //   })
-  // })
+    await waitFor(() => {
+      expect(signIn).toHaveBeenCalledWith('credentials', {
+        callbackUrl: '/dashboard',
+        password: 'admin',
+        redirect: true,
+        username: 'admin',
+      })
+    })
+  })
 })
