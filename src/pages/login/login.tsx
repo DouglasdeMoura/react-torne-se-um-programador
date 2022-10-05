@@ -54,9 +54,9 @@ export const Login = () => {
         <div
           className={styles.errorContainer}
           ref={errorRef}
-          hidden={!router.query.error}
+          hidden={!router?.query?.error}
         >
-          {router.query.error === 'CredentialsSignin'
+          {router?.query?.error === 'CredentialsSignin'
             ? 'Usuário ou senha inválidos'
             : null}
         </div>
