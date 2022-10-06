@@ -16,7 +16,6 @@ export const authOptions = {
         password: { label: 'Senha', type: 'password' },
       },
       async authorize(credentials, req) {
-        // const user = { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         const user = await prisma.user.findFirst({
           where: {
             AND: {
