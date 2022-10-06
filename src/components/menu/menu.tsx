@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Suspense } from 'react'
 
 import { Loading } from '../loading/loading'
+import LoginButton from '../login-button'
 
 import styles from './menu.module.css'
 
@@ -24,6 +25,7 @@ export const Menu: React.FC<MenuProps> = ({ children }) => (
             <Link href="/logout">Sair</Link>
           </li>
         </ul>
+        <LoginButton />
       </nav>
     </aside>
     <main className="container">
