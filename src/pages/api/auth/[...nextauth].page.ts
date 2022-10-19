@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth'
+import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
@@ -6,16 +6,20 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: 'jwt',
+  },
   providers: [
     CredentialsProvider({
+      type: 'credentials',
       name: 'Credentials',
       credentials: {
         username: { label: 'Usuário', type: 'text' },
         password: { label: 'Senha', type: 'password' },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const user = await prisma.user.findFirst({
           where: {
             AND: {
@@ -25,6 +29,8 @@ export const authOptions = {
             },
           },
         })
+
+        console.log(user)
 
         if (user) {
           return user
@@ -36,6 +42,11 @@ export const authOptions = {
   ],
   pages: {
     signIn: '/login',
+  },
+  callbacks: {
+    jwt(params) {
+      return params.token
+    },
   },
 }
 
