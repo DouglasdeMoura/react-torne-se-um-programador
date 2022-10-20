@@ -30,8 +30,6 @@ export const authOptions: NextAuthOptions = {
           },
         })
 
-        console.log(user)
-
         if (user) {
           return user
         } else {
