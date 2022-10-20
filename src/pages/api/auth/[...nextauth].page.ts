@@ -3,6 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
 
@@ -24,17 +25,24 @@ export const authOptions: NextAuthOptions = {
           where: {
             AND: {
               email: credentials?.username,
-              // TODO: aplicar um hash à senha (nunca salvar a senha em texto plano)
-              password: credentials?.password,
             },
           },
         })
 
-        if (user) {
-          return user
-        } else {
+        if (!user) {
           return null
         }
+
+        const match = await bcrypt.compare(
+          credentials?.password || '',
+          user?.password || '',
+        )
+
+        if (match) {
+          return user
+        }
+
+        return null
       },
     }),
   ],
